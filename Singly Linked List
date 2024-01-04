@@ -1,0 +1,153 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node{
+	int data;
+	struct node*next;
+};
+struct node*head=NULL;
+struct node*tail=NULL;
+struct node *n;
+struct node *t;
+void insatbeg(int v){
+	n=(struct node*)malloc(sizeof(struct node));
+	n->data=v;
+	n->next=NULL;
+	if(head==NULL){
+		head=n;
+		tail=n;
+	}
+	else{
+		n->next=head;
+		head=n;
+	}
+}
+void insatend(int v){
+	n=(struct node*)malloc(sizeof(struct node));
+	n->data=v;
+	n->next=NULL;
+	if(head==NULL){
+		head=NULL;
+		tail=NULL;
+	}
+	else{
+		tail->next=n;
+		tail=n;
+	}
+}
+void insatmid(int v,int mid_num){
+	n=(struct node*)malloc(sizeof(struct node));
+	n->data=v;
+	n->next=NULL;
+	if((tail==NULL)&&(head==NULL)){
+		printf("EMPTY LIST");
+	}
+	for(t=head;t!=NULL;t=t->next){
+		if(t->data==mid_num){
+			break;
+      	}
+	}
+	n->next=t->next;
+	t->next=n;
+}
+void delatbeg(){
+	if(head==NULL){
+		printf("List is empty\n");
+	}
+	else if(head==tail){
+		head=NULL;
+		tail=NULL;
+	}
+	t=head;
+	head=t->next;
+	free(t);
+}
+void delatend(){
+	struct node *tp;
+	if(head==NULL){
+		printf("List is empty\n");
+	}
+	else if(head==tail){
+		head=NULL;
+		tail=NULL;
+	}
+	for(t=head;t->next!=NULL;t=t->next){
+		tp=t;
+	}
+	tail=tp;
+	tail->next=NULL;
+	free(t);
+}
+void delatmid(int mid_num){
+	struct node *tp;
+	if(head==NULL){
+		printf("List empty\n");
+	}
+	for(t=head;t!=NULL&&t->data!=mid_num;t=t->next){
+		tp=t;
+	}
+	tp->next=t->next;
+	free(t);
+}
+
+void display()
+{   struct node*temp=head;
+    if(head==NULL){
+    	printf("List is empty\n");
+	}
+	while(temp!=NULL){
+		printf("%d->",temp->data);
+		temp=temp->next;
+	}
+	printf("NULL\n");
+}
+int main(){
+	int ch,val,m;
+	printf("*****SINGLY LINKED LIST*****\n\n");
+	printf("1)INSERT AT BEGIN\n");
+	printf("2)INSERT AT END\n");
+	printf("3)INSERT AT MID\n");
+	printf("4)DELETE AT BEGIN\n");
+	printf("5)DELETE AT END\n");
+	printf("6)DELETE AT MID\n");
+	printf("7)DISPLAY ALL ELEMENTS\n");
+	printf("8)EXIT\n");
+	do{
+		printf("enter a choice: ");
+		scanf("%d",&ch);
+		switch(ch){
+			case 1:printf("Enter a value to insert: ");
+			       scanf("%d",&val);
+			       insatbeg(val);
+			       printf("Inserted Successfully\n");
+		    break;
+		    case 2:printf("Enter a value to insert: ");
+			       scanf("%d",&val);
+			       insatend(val);
+			       printf("Inserted Successfully\n");
+		    break;
+		    case 3:printf("Enter a value to insert: ");
+			       scanf("%d",&val);
+			       printf("Enter mid no where you insert: ");
+			       scanf("%d",&m);
+			       insatmid(val,m);
+			       printf("Inserted Successfully\n");
+			break;
+			case 4:delatbeg();
+			       printf("Deleted Successfully\n");
+		    break;
+		    case 5:delatend();
+		           printf("Deleted Successfully\n");
+		    break;
+		    case 6:printf("Enter position to delete: ");
+		           scanf("%d",&m);
+			       delatmid(m);
+			       printf("Deleted Successfully\n");
+		    break;
+		    case 7:display();
+		    break;
+		    default:printf("INVALID CHOICE\n");
+		}
+	}while(ch!=8);
+	return 0;
+	
+}
